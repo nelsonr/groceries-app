@@ -1,0 +1,78 @@
+h1 {
+    margin-top: 0;
+}
+
+ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    gap: 0.75em;
+}
+
+label:has(input[type="checkbox"]) {
+    --size: 24;
+    position: relative;
+    line-height: 0;
+
+    &:before {
+        content: "";
+        display: block;
+        width: calc(var(--size) * 1px);
+        height: calc(var(--size) * 1px);
+        outline: 1px solid black;
+        border-radius: 4px;
+    }
+
+    &::after {
+        --size-icon: 16px;
+        content: "";
+        display: block;
+        position: absolute;
+        background-color: black;
+        width: var(--size-icon);
+        height: var(--size-icon);
+        top: calc(var(--size-icon) / 4);
+        left: calc(var(--size-icon) / 4);
+        transform: scale((calc((var(--size) / 16) * 0.75)));
+        clip-path: path(
+            "M13.27 3.3525C13.6275 3.6125 13.7075 4.1125 13.4475 4.47L7.0475 13.27C6.91 13.46 6.6975 13.5775 6.4625 13.5975C6.2275 13.6175 6 13.53 5.835 13.365L2.635 10.165C2.3225 9.8525 2.3225 9.345 2.635 9.0325C2.9475 8.72 3.455 8.72 3.7675 9.0325L6.305 11.57L12.155 3.5275C12.415 3.17 12.915 3.09 13.2725 3.35L13.27 3.3525Z"
+        );
+        visibility: hidden;
+    }
+
+    input {
+        width: calc(var(--size) * 1px);
+        height: calc(var(--size) * 1px);
+        visibility: hidden;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &:has(input:checked)::after {
+        visibility: visible;
+    }
+}
+
+input[type="text"] {
+    padding: 4px 16px;
+    font-size: 1.1rem;
+    border: none;
+    border-bottom: 1px solid;
+    flex: 1 1 auto;
+    outline: none;
+    background-color: transparent;
+
+    &:focus-within {
+        border-bottom-color: salmon;
+        background-color: rgb(255 255 255 / 60%);
+    }
+}

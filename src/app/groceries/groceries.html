@@ -1,0 +1,22 @@
+<h1>Lista de compras</h1>
+
+<ul>
+  @for (item of groceries(); track item.id) {
+    <li>
+      <label>
+        <input type="checkbox"
+               [id]="'checkbox-' + item.id"
+               [checked]="item.checked"
+               (change)="onCheckboxChange($event, $index)">
+      </label>
+
+      <input type="text"
+             debounceInput
+             [id]="'input-' + item.id"
+             [value]="item.text"
+             (keydown)="onKeyDown($event, $index)"
+             (debouncedInput)="onInput($event, $index)"
+             (keyup)="onKeyUp($event, $index)" />
+    </li>
+  }
+</ul>
