@@ -46,7 +46,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/groceries-app"
+              "baseHref": "/groceries-app/"
             },
             "development": {
               "optimization": false,
@@ -88,7 +88,10 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "buildTarget": "test:build:production"
+          }
         }
       }
     }
