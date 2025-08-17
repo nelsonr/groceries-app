@@ -90,7 +90,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "buildTarget": "test:build:production"
+            "buildTarget": "groceries-app:build:production"
           }
         }
       }
