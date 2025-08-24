@@ -6,22 +6,20 @@ import { Grocery } from './grocery';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    Groceries,
-    RouterOutlet,
-  ],
+  imports: [Groceries, RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
   private readonly _groceriesStore = inject(GroceriesStore);
 
   protected groceries: WritableSignal<Grocery[]> = signal([]);
+  protected focusIndex = signal(0);
 
   constructor() {
     effect(() => {
       this._groceriesStore.updateList(this.groceries());
-    })
+    });
   }
 
   ngOnInit() {
@@ -33,9 +31,11 @@ export class App {
       return list.toSpliced(index + 1, 0, {
         id: crypto.randomUUID(),
         checked: false,
-        text: ""
+        text: '',
       });
     });
+
+    this.focusIndex.set(index + 1);
   }
 
   protected onUpdateEntry(updatedEntry: Grocery) {
@@ -45,5 +45,11 @@ export class App {
 
   protected onDeleteEntry(index: number) {
     this.groceries.update((list) => list.toSpliced(index, 1));
+
+    if (index > 0) {
+      this.focusIndex.set(index - 1);
+    } else {
+      this.focusIndex.set(0);
+    }
   }
 }
