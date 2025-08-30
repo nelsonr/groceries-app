@@ -13,7 +13,7 @@ import { Grocery } from './grocery';
 export class App {
   private readonly _groceriesStore = inject(GroceriesStore);
 
-  protected groceries: WritableSignal<Grocery[]> = signal([]);
+  protected groceries = signal<Grocery[]>([]);
   protected focusIndex = signal(0);
 
   constructor() {
@@ -51,5 +51,11 @@ export class App {
     } else {
       this.focusIndex.set(0);
     }
+  }
+
+  protected onCleanEntries() {
+    this.groceries.update((list) => {
+      return list.filter((item) => !item.checked);
+    });
   }
 }

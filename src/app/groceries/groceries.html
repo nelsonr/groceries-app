@@ -1,28 +1,42 @@
-<h1>Lista de compras</h1>
+<main>
+  <header>
+    <h1>Lista de compras</h1>
+  </header>
 
-<ul>
-  @for (item of groceries(); track item.id) {
-  <li>
-    <mat-checkbox
-      [id]="'checkbox-' + item.id"
-      [checked]="item.checked"
-      (change)="onCheckboxChange($event, $index)"
-    />
+  <section>
+    <ul>
+      @for (item of groceries(); track item.id) {
+      <li>
+        <mat-checkbox
+          [id]="'checkbox-' + item.id"
+          [checked]="item.checked"
+          (change)="onCheckboxChange($event, $index)"
+        />
 
-    <mat-form-field class="grow">
-      <input
-        #groceryInput
-        matInput
-        type="text"
-        debounceInput
-        [id]="'input-' + item.id"
-        [value]="item.text"
-        [disabled]="item.checked"
-        (keydown)="onKeyDown($event, $index)"
-        (debouncedInput)="onInput($event, $index)"
-        (keyup)="onKeyUp($event, $index)"
-      />
-    </mat-form-field>
-  </li>
-  }
-</ul>
+        <mat-form-field class="grow">
+          <input
+            #groceryInput
+            matInput
+            type="text"
+            debounceInput
+            [id]="'input-' + item.id"
+            [value]="item.text"
+            [disabled]="item.checked"
+            (keydown)="onKeyDown($event, $index)"
+            (debouncedInput)="onInput($event, $index)"
+            (keyup)="onKeyUp($event, $index)"
+          />
+        </mat-form-field>
+      </li>
+      }
+    </ul>
+  </section>
+
+  <footer>
+    <div class="footer-actions">
+      <button matButton="filled" [disabled]="checkedCount() === 0" (click)="onCleanClick()">
+        Limpar
+      </button>
+    </div>
+  </footer>
+</main>

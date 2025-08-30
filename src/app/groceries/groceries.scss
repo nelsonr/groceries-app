@@ -16,6 +16,30 @@ li {
     gap: 0.5rem;
 }
 
+main {
+    height: 100dvh;
+    padding: 2rem 1rem;
+    max-width: 600px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+section {
+    overflow: auto;
+}
+
 .grow {
     flex: 1 1 auto;
+}
+
+.footer-actions {
+    --mat-button-filled-container-height: 48px;
+    padding-top: 1rem;
+
+    button {
+        width: 100%;
+        font-size: 1.2em;
+    }
 }

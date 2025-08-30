@@ -1,11 +1,10 @@
-<main>
-  <app-groceries
-    [groceries]="groceries()"
-    [focusIndex]="focusIndex()"
-    (addEntry)="onAddEntry($event)"
-    (updateEntry)="onUpdateEntry($event)"
-    (deleteEntry)="onDeleteEntry($event)"
-  />
+<app-groceries
+  [groceries]="groceries()"
+  [focusIndex]="focusIndex()"
+  (addEntry)="onAddEntry($event)"
+  (updateEntry)="onUpdateEntry($event)"
+  (deleteEntry)="onDeleteEntry($event)"
+  (cleanEntries)="onCleanEntries()"
+/>
 
-  <router-outlet />
-</main>
+<router-outlet />

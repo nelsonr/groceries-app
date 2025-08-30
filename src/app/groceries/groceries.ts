@@ -1,14 +1,30 @@
-import { Component, input, output, viewChildren, effect, ElementRef } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  viewChildren,
+  effect,
+  ElementRef,
+  computed,
+} from '@angular/core';
 import { Grocery } from '../grocery';
 import { Debounce } from '../debounce';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-groceries',
-  imports: [Debounce, FormsModule, MatCheckboxModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    Debounce,
+    FormsModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+  ],
   templateUrl: './groceries.html',
   styleUrl: './groceries.scss',
 })
@@ -18,16 +34,21 @@ export class Groceries {
   public addEntry = output<number>();
   public updateEntry = output<Grocery>();
   public deleteEntry = output<number>();
+  public cleanEntries = output<void>();
+
+  protected checkedCount = computed(() => {
+    return this.groceries().filter((item) => item.checked).length;
+  });
 
   protected inputs = viewChildren<ElementRef>('groceryInput');
 
   constructor() {
     effect(() => {
       const index = this.focusIndex();
-      const elements = this.inputs();
+      const inputs = this.inputs();
 
-      if (elements[index]) {
-        setTimeout(() => elements[index].nativeElement.focus(), 0);
+      if (inputs[index]) {
+        setTimeout(() => inputs[index].nativeElement.focus(), 0);
       }
     });
   }
@@ -64,5 +85,9 @@ export class Groceries {
       entry.checked = ev.checked;
       this.updateEntry.emit(entry);
     }
+  }
+
+  protected onCleanClick() {
+    this.cleanEntries.emit();
   }
 }
