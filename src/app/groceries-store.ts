@@ -26,10 +26,21 @@ export class GroceriesStore {
 
     return [
       {
-        id: crypto.randomUUID(),
+        id: GroceriesStore.randomId(),
         checked: false,
         text: '',
       },
     ];
+  }
+
+  public static randomId(): string {
+    const numbers = [];
+
+    for (let i = 0; i < 4; i++) {
+      const n = Math.ceil(Math.random() * 10000);
+      numbers.push(n);
+    }
+
+    return numbers.join('-');
   }
 }

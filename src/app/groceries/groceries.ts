@@ -87,7 +87,7 @@ export class Groceries {
     }
   }
 
-  protected onCleanClick() {
+  protected onCleanupClick() {
     this.cleanEntries.emit();
   }
 }

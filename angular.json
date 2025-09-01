@@ -46,7 +46,8 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/groceries-app/"
+              "baseHref": "/groceries-app/",
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,

@@ -14,7 +14,7 @@ export class App {
   private readonly _groceriesStore = inject(GroceriesStore);
 
   protected groceries = signal<Grocery[]>([]);
-  protected focusIndex = signal(0);
+  protected focusIndex = signal(-1);
 
   constructor() {
     effect(() => {
@@ -29,7 +29,7 @@ export class App {
   protected onAddEntry(index: number) {
     this.groceries.update((list) => {
       return list.toSpliced(index + 1, 0, {
-        id: crypto.randomUUID(),
+        id: GroceriesStore.randomId(),
         checked: false,
         text: '',
       });
@@ -44,13 +44,13 @@ export class App {
   }
 
   protected onDeleteEntry(index: number) {
-    this.groceries.update((list) => list.toSpliced(index, 1));
-
     if (index > 0) {
       this.focusIndex.set(index - 1);
     } else {
       this.focusIndex.set(0);
     }
+
+    this.groceries.update((list) => list.toSpliced(index, 1));
   }
 
   protected onCleanEntries() {
