@@ -48,7 +48,7 @@ export class Groceries {
       const inputs = this.inputs();
 
       if (inputs[index]) {
-        setTimeout(() => inputs[index].nativeElement.focus(), 0);
+        inputs[index].nativeElement.focus();
       }
     });
   }
