@@ -1,0 +1,77 @@
+{
+  "configVersion": 1,
+  "timestamp": 1756720824026,
+  "index": "/groceries-app/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/groceries-app/favicon.ico",
+        "/groceries-app/index.html",
+        "/groceries-app/main-UBROVMW2.js",
+        "/groceries-app/manifest.webmanifest",
+        "/groceries-app/styles-LEG4VREJ.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/groceries-app/icons/icon-128x128.png",
+        "/groceries-app/icons/icon-144x144.png",
+        "/groceries-app/icons/icon-152x152.png",
+        "/groceries-app/icons/icon-192x192.png",
+        "/groceries-app/icons/icon-384x384.png",
+        "/groceries-app/icons/icon-512x512.png",
+        "/groceries-app/icons/icon-72x72.png",
+        "/groceries-app/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/groceries-app/favicon.ico": "1676ec0c1787b84f363df32664b599f35623f8a9",
+    "/groceries-app/icons/icon-128x128.png": "75ac568de6a75a6bda120f4bc9e9c61fab125617",
+    "/groceries-app/icons/icon-144x144.png": "5e760ba2d77bc487d03ca5e43c4bb2649af71ffd",
+    "/groceries-app/icons/icon-152x152.png": "923aef29be4d8db1e173af73cabe115c9ddd7c8a",
+    "/groceries-app/icons/icon-192x192.png": "e89baffecd97ba78cd7ca64c49ba3ab4bc70447a",
+    "/groceries-app/icons/icon-384x384.png": "b5108b69907c31d2262ad8239941f4cc257ce340",
+    "/groceries-app/icons/icon-512x512.png": "5f04acf9756986388f57485a670acd336d87b289",
+    "/groceries-app/icons/icon-72x72.png": "b83de432bf77edb1c7e6a30fe1cff70106f2ad72",
+    "/groceries-app/icons/icon-96x96.png": "6cf33fbcc8b3ccfd393db5359c30867ef8138546",
+    "/groceries-app/index.html": "d061de9b6d2a605bc2a39b85a26739dbc4daf6ef",
+    "/groceries-app/main-UBROVMW2.js": "f4c786bc53bdb38d3d6df15eb4a7ea73c1cafa4d",
+    "/groceries-app/manifest.webmanifest": "c46063ec4bace9328287d1629dce7ec251580f84",
+    "/groceries-app/styles-LEG4VREJ.css": "52507418b2267bbc025c53baddc7cda24d22c283"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
