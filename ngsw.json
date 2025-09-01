@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1756720824026,
+  "timestamp": 1756720989142,
   "index": "/groceries-app/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/groceries-app/favicon.ico",
         "/groceries-app/index.html",
-        "/groceries-app/main-UBROVMW2.js",
+        "/groceries-app/main-YA5LCAXY.js",
         "/groceries-app/manifest.webmanifest",
         "/groceries-app/styles-LEG4VREJ.css"
       ],
@@ -50,8 +50,8 @@
     "/groceries-app/icons/icon-512x512.png": "5f04acf9756986388f57485a670acd336d87b289",
     "/groceries-app/icons/icon-72x72.png": "b83de432bf77edb1c7e6a30fe1cff70106f2ad72",
     "/groceries-app/icons/icon-96x96.png": "6cf33fbcc8b3ccfd393db5359c30867ef8138546",
-    "/groceries-app/index.html": "d061de9b6d2a605bc2a39b85a26739dbc4daf6ef",
-    "/groceries-app/main-UBROVMW2.js": "f4c786bc53bdb38d3d6df15eb4a7ea73c1cafa4d",
+    "/groceries-app/index.html": "d98bcc72b6976efc0d5992b578e97b138d605244",
+    "/groceries-app/main-YA5LCAXY.js": "a3826aa5fed9e5081a55880a70c6c955b89979e2",
     "/groceries-app/manifest.webmanifest": "c46063ec4bace9328287d1629dce7ec251580f84",
     "/groceries-app/styles-LEG4VREJ.css": "52507418b2267bbc025c53baddc7cda24d22c283"
   },
