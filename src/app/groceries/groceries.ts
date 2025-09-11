@@ -6,6 +6,8 @@ import {
   effect,
   ElementRef,
   computed,
+  inject,
+  signal,
 } from '@angular/core';
 import { Grocery } from '../grocery';
 import { Debounce } from '../debounce';
@@ -14,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { GroceriesStore } from '../groceries-store';
 
 @Component({
   selector: 'app-groceries',
@@ -29,20 +32,21 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './groceries.scss',
 })
 export class Groceries {
-  public groceries = input.required<Grocery[]>();
-  public focusIndex = input(0);
-  public addEntry = output<number>();
-  public updateEntry = output<Grocery>();
-  public deleteEntry = output<number>();
-  public cleanEntries = output<void>();
+  protected inputs = viewChildren<ElementRef>('groceryInput');
 
+  protected groceries = signal<Grocery[]>([]);
+  protected focusIndex = signal(-1);
   protected checkedCount = computed(() => {
     return this.groceries().filter((item) => item.checked).length;
   });
 
-  protected inputs = viewChildren<ElementRef>('groceryInput');
+  private readonly _groceriesStore = inject(GroceriesStore);
 
   constructor() {
+    effect(() => {
+      this._groceriesStore.updateList(this.groceries());
+    });
+
     effect(() => {
       const index = this.focusIndex();
       const inputs = this.inputs();
@@ -53,19 +57,23 @@ export class Groceries {
     });
   }
 
+  ngOnInit() {
+    this.groceries.set(this._groceriesStore.getList());
+  }
+
   protected onKeyDown(ev: KeyboardEvent, index: number) {
     const target = ev.target as HTMLInputElement;
     const isInputEmpty = target.value.length === 0;
     const entriesCount = this.groceries().length;
 
     if (ev.key === 'Backspace' && isInputEmpty && entriesCount > 1) {
-      this.deleteEntry.emit(index);
+      this.deleteEntry(index);
     }
   }
 
   protected onKeyUp(ev: KeyboardEvent, index: number) {
     if (ev.key === 'Enter') {
-      this.addEntry.emit(index);
+      this.addEntry(index);
     }
   }
 
@@ -74,7 +82,7 @@ export class Groceries {
 
     if (entry) {
       entry.text = value;
-      this.updateEntry.emit(entry);
+      this.updateEntry(entry)
     }
   }
 
@@ -83,11 +91,44 @@ export class Groceries {
 
     if (entry) {
       entry.checked = ev.checked;
-      this.updateEntry.emit(entry);
+      this.updateEntry(entry)
     }
   }
 
   protected onCleanupClick() {
-    this.cleanEntries.emit();
+    this.cleanEntries();
+  }
+
+  private addEntry(index: number) {
+    this.groceries.update((list) => {
+      return list.toSpliced(index + 1, 0, {
+        id: GroceriesStore.randomId(),
+        checked: false,
+        text: '',
+      });
+    });
+
+    this.focusIndex.set(index + 1);
+  }
+
+  private updateEntry(updatedEntry: Grocery) {
+    const index = this.groceries().findIndex((entry) => entry.id === updatedEntry.id);
+    this.groceries.update((list) => list.with(index, updatedEntry));
+  }
+
+  private deleteEntry(index: number) {
+    if (index > 0) {
+      this.focusIndex.set(index - 1);
+    } else {
+      this.focusIndex.set(0);
+    }
+
+    this.groceries.update((list) => list.toSpliced(index, 1));
+  }
+
+  private cleanEntries() {
+    this.groceries.update((list) => {
+      return list.filter((item) => !item.checked);
+    });
   }
 }
