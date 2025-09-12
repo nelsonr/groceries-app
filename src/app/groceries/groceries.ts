@@ -1,7 +1,5 @@
 import {
   Component,
-  input,
-  output,
   viewChildren,
   effect,
   ElementRef,
@@ -10,13 +8,13 @@ import {
   signal,
 } from '@angular/core';
 import { Grocery } from '../grocery';
-import { Debounce } from '../debounce';
+import { Debounce } from '../directives/debounce';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { GroceriesStore } from '../groceries-store';
+import { GroceriesStore } from '../services/groceries-store';
 
 @Component({
   selector: 'app-groceries',
@@ -40,11 +38,11 @@ export class Groceries {
     return this.groceries().filter((item) => item.checked).length;
   });
 
-  private readonly _groceriesStore = inject(GroceriesStore);
+  private readonly groceriesStore = inject(GroceriesStore);
 
   constructor() {
     effect(() => {
-      this._groceriesStore.updateList(this.groceries());
+      this.groceriesStore.storeList(this.groceries());
     });
 
     effect(() => {
@@ -58,7 +56,7 @@ export class Groceries {
   }
 
   ngOnInit() {
-    this.groceries.set(this._groceriesStore.getList());
+    this.groceries.set(this.groceriesStore.getList());
   }
 
   protected onKeyDown(ev: KeyboardEvent, index: number) {
@@ -82,7 +80,7 @@ export class Groceries {
 
     if (entry) {
       entry.text = value;
-      this.updateEntry(entry)
+      this.updateEntry(entry);
     }
   }
 
@@ -91,12 +89,13 @@ export class Groceries {
 
     if (entry) {
       entry.checked = ev.checked;
-      this.updateEntry(entry)
+      this.updateEntry(entry);
     }
   }
 
   protected onCleanupClick() {
-    this.cleanEntries();
+    this.updateStats();
+    this.clearCheckedEntries();
   }
 
   private addEntry(index: number) {
@@ -123,12 +122,26 @@ export class Groceries {
       this.focusIndex.set(0);
     }
 
-    this.groceries.update((list) => list.toSpliced(index, 1));
+    this.groceries.update((list) => {
+      return list.toSpliced(index, 1);
+    });
   }
 
-  private cleanEntries() {
-    this.groceries.update((list) => {
-      return list.filter((item) => !item.checked);
-    });
+  private clearCheckedEntries() {
+    const remainingEntriesCount = this.groceries().filter((item) => !item.checked).length;
+
+    if (remainingEntriesCount == 0) {
+      this.groceries.set(this.groceriesStore.emptyList());
+    } else {
+      this.groceries.update((list) => list.filter((item) => !item.checked));
+    }
+  }
+
+  private updateStats() {
+    const checkedEntries = this.groceries()
+      .filter((item) => item.checked && item.text.trim().length > 0)
+      .map((item) => item.text);
+
+    this.groceriesStore.updateStats(checkedEntries);
   }
 }

@@ -1,0 +1,19 @@
+<div class="progress-counter" [style.--progress]="percent() + '%'">
+  <div class="progress-counter__bar">
+    <mat-progress-bar
+       mode="determinate"
+       [value]="percent()"
+    ></mat-progress-bar>
+  </div>
+
+  <div class="progress-counter__body">
+    <div class="progress-counter__content">
+      <div class="progress-counter__label">{{ label() }}</div>
+      <div class="progress-counter__value">{{ value() }}</div>
+    </div>
+    <div class="progress-counter__content progress-counter--masked">
+      <div class="progress-counter__label">{{ label() }}</div>
+      <div class="progress-counter__value">{{ value() }}</div>
+    </div>
+  </div>
+</div>

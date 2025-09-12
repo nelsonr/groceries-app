@@ -1,0 +1,52 @@
+@use "@angular/material" as mat;
+
+.progress-counter {
+  --progress: var(0%);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  font-size: var(--mat-sys-body-large);
+  color: var(--mat-sys-on-surface);
+}
+
+.progress-counter__bar {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+// Overrides for Material progres bar component
+.progress-counter__bar {
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-height: 40px,
+      track-height: 40px
+    )
+  );
+}
+
+.progress-counter__body {
+  grid-row: 1;
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.progress-counter__content {
+  grid-row: 1;
+  grid-column: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  padding: 0 1em;
+}
+
+.progress-counter--masked {
+  filter: invert(1);
+  clip-path: xywh(0 0 var(--progress) 100%);
+}
