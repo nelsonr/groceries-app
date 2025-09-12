@@ -1,7 +1,13 @@
 <main>
   <header>
-    <img class="logo" src="icons/icon-96x96.png" width="48" height="48" alt="" />
-    <h1>Estatísticas</h1>
+    <div class="title">
+      <img class="logo" src="icons/icon-96x96.png" width="48" height="48" alt="" />
+      <h1>Estatísticas</h1>
+    </div>
+
+    <a routerLink="" matIconButton aria-label="Ver estatísticas">
+      <mat-icon fontSet="material-icons-outlined">shopping_bag</mat-icon>
+    </a>
   </header>
 
   <section>
@@ -11,6 +17,8 @@
         [value]="item.count"
         [maxValue]="total()"
       ></app-progress-counter>
+    } @empty {
+      <div class="empty">Ainda sem dados...</div>
     }
   </section>
 </main>

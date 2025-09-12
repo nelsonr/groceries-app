@@ -2,10 +2,18 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { GroceriesStore } from '../services/groceries-store';
 import { GroceryStats } from '../grocery-stats';
 import { ProgressCounter } from '../progress-counter/progress-counter';
+import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-stats',
-  imports: [ProgressCounter],
+  imports: [
+    ProgressCounter,
+    MatButtonModule,
+    MatIconModule,
+    RouterLink,
+  ],
   templateUrl: './stats.html',
   styleUrl: './stats.scss',
 })
