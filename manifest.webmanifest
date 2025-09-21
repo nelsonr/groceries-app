@@ -1,6 +1,6 @@
 {
-  "name": "Saco de Compras",
-  "short_name": "Saco Compras",
+  "name": "Lista de Compras",
+  "short_name": "Lista Compras",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
@@ -51,7 +51,7 @@
       "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
@@ -59,7 +59,7 @@
       "src": "screenshots/mobile.png",
       "sizes": "1082x2400",
       "form_factor": "narrow",
-      "label": "Exemplo do saco de compras"
+      "label": "Exemplo da lista de compras"
     }
   ]
 }
