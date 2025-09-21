@@ -22,6 +22,12 @@ export class GroceriesStore {
     return data ? JSON.parse(data) : {};
   }
 
+  public getStatsValues(): string[] {
+    const stats = this.getStats();
+
+    return Object.entries(stats).map(([k, _v]) => k).toSorted();
+  }
+
   public updateStats(entries: string[]) {
     const data = window.localStorage.getItem('stats');
     const stats: GroceryStats = data ? JSON.parse(data) : {};

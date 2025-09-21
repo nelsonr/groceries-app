@@ -29,6 +29,8 @@
             enterkeyhint="done"
             debounceInput
             placeholder="Escreve aqui..."
+            name="grocery-item"
+            autocomplete="grocery-item"
             [id]="'input-' + item.id"
             [value]="item.text"
             [disabled]="item.checked"
@@ -36,6 +38,9 @@
             (debouncedInput)="onInput($event, $index)"
             (keyup)="onKeyUp($event, $index)"
           />
+          <button matSuffix matIconButton aria-label="Ver sugestões" (click)="openSuggestions($event, $index)">
+            <mat-icon>list</mat-icon>
+          </button>
         </mat-form-field>
       </li>
       }

@@ -1,0 +1,13 @@
+<h3 mat-dialog-title>Sugestões</h3>
+
+<mat-dialog-content>
+  <mat-action-list>
+    @for (item of data.suggestions; track item) {
+    <button mat-list-item (click)="onSuggestionSelect(item)">{{ item }}</button>
+    }
+  </mat-action-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button matButton (click)="onCloseClick()">Close</button>
+</mat-dialog-actions>

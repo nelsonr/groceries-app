@@ -17,6 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { GroceriesStore } from '../services/groceries-store';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SuggestionsDialog } from '../suggestions-dialog/suggestions-dialog';
 
 @Component({
   selector: 'app-groceries',
@@ -24,6 +26,7 @@ import { RouterLink } from '@angular/router';
     Debounce,
     FormsModule,
     MatCheckboxModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
@@ -37,12 +40,14 @@ export class Groceries {
   protected inputs = viewChildren<ElementRef>('groceryInput');
 
   protected groceries = signal<Grocery[]>([]);
+  protected suggestions = signal<string[]>([])
   protected focusIndex = signal(-1);
   protected checkedCount = computed(() => {
     return this.groceries().filter((item) => item.checked).length;
   });
 
   private readonly groceriesStore = inject(GroceriesStore);
+  private readonly suggestionsDialog = inject(MatDialog);
 
   constructor() {
     effect(() => {
@@ -61,6 +66,7 @@ export class Groceries {
 
   ngOnInit() {
     this.groceries.set(this.groceriesStore.getList());
+    this.setSugestions();
   }
 
   protected onKeyDown(ev: KeyboardEvent, index: number) {
@@ -99,10 +105,34 @@ export class Groceries {
 
   protected onCleanupClick() {
     this.updateStats();
+    this.setSugestions();
     this.clearCheckedEntries();
   }
 
-  private addEntry(index: number) {
+  protected openSuggestions(event: Event, index: number) {
+    event.stopPropagation();
+
+    const dialogRef = this.suggestionsDialog.open(SuggestionsDialog, {
+      width: '90vw',
+      height: '60vh',
+      data: {
+        suggestions: this.suggestions()
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const entry = this.groceries().at(index);
+
+        if (entry) {
+          entry.text = result;
+          this.updateEntry(entry);
+          this.addEntry(index, false);
+        }
+      }
+    });
+  }
+  private addEntry(index: number, focus = true) {
     this.groceries.update((list) => {
       return list.toSpliced(index + 1, 0, {
         id: GroceriesStore.randomId(),
@@ -111,7 +141,11 @@ export class Groceries {
       });
     });
 
-    this.focusIndex.set(index + 1);
+    if (focus) {
+      this.focusIndex.set(index + 1);
+    } else {
+      this.focusIndex.set(-1);
+    }
   }
 
   private updateEntry(updatedEntry: Grocery) {
@@ -147,5 +181,9 @@ export class Groceries {
       .map((item) => item.text);
 
     this.groceriesStore.updateStats(checkedEntries);
+  }
+
+  private setSugestions() {
+    this.suggestions.set(this.groceriesStore.getStatsValues());
   }
 }
