@@ -109,6 +109,10 @@ export class Groceries {
     this.clearCheckedEntries();
   }
 
+  protected setFocus(index: number) {
+    this.focusIndex.set(index);
+  }
+
   protected openSuggestions(event: Event, index: number) {
     event.stopPropagation();
 
@@ -142,9 +146,9 @@ export class Groceries {
     });
 
     if (focus) {
-      this.focusIndex.set(index + 1);
+      this.setFocus(index + 1);
     } else {
-      this.focusIndex.set(-1);
+      this.setFocus(-1);
     }
   }
 
@@ -155,9 +159,9 @@ export class Groceries {
 
   private deleteEntry(index: number) {
     if (index > 0) {
-      this.focusIndex.set(index - 1);
+      this.setFocus(index - 1);
     } else {
-      this.focusIndex.set(0);
+      this.setFocus(0);
     }
 
     this.groceries.update((list) => {

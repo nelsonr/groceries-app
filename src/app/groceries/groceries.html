@@ -34,13 +34,17 @@
             [id]="'input-' + item.id"
             [value]="item.text"
             [disabled]="item.checked"
+            (focus)="setFocus($index)"
+            (blur)="setFocus(-1)"
             (keydown)="onKeyDown($event, $index)"
             (debouncedInput)="onInput($event, $index)"
             (keyup)="onKeyUp($event, $index)"
           />
+          @if (focusIndex() === $index || item.text.length === 0) {
           <button matSuffix matIconButton aria-label="Ver sugestões" (click)="openSuggestions($event, $index)">
             <mat-icon>list</mat-icon>
           </button>
+          }
         </mat-form-field>
       </li>
       }
